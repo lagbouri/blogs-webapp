@@ -1,58 +1,30 @@
 version: '3'
+
 services:
-  frontend:
+  angular:
     build:
-<<<<<<< HEAD
-      context: ./angular-8-client 
+      context: ./angular-app
+      dockerfile: Dockerfile
     ports:
-      - 8081:8081
-    networks:
-      - net-app  
-=======
-      context: ./angular-8-client
-    ports:
-      - 8081:8081
-    networks:
-      - myapp_network
->>>>>>> origin/anas-prog
+      - 80:80
+    depends_on:
+      - backend
 
   backend:
     build:
-      context: ./spring-boot-server
+      context: ./spring-boot-app
+      dockerfile: Dockerfile
     ports:
-      - 8081:8081
-    networks:
-<<<<<<< HEAD
-      - net-app  
+      - 8080:8080
     depends_on:
-      - db
-      
-=======
-      - myapp_network
-    depends_on:
-      - db
->>>>>>> origin/anas-prog
+      - database
 
-  db:
+  database:
     image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: youssefDB
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
     ports:
       - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: mysql
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 123456
-    networks:
-<<<<<<< HEAD
-      - net-app
-
-    
-  networks:
-    net-app: 
-=======
-      - myapp_network
-
-networks:
-  myapp_network:
-    driver: bridge
->>>>>>> origin/anas-prog
